@@ -15,21 +15,32 @@ function App() {
 
   const addComida = (comida) => {
     console.log("añadiendo comida desde AddFoodForm", comida)
-    const copy = [... foodsList]
+    const copy = [...foodsList]
     copy.push(comida)
     setFoodsList(copy)
 
-    const copy2 = [... foodsListShow]
+    const copy2 = [...foodsListShow]
     copy2.push(comida)
     setFoodsListShow(copy2)
   }
 
   const filterComida = (filterQuery) => {
-    console.log(filterQuery)
+    //console.log(filterQuery)
     const filteredComida = foodsList.filter((eachComida) => {
       return eachComida.name.startsWith(filterQuery)
     })
 
+    setFoodsListShow(filteredComida)
+  }
+  const borrarComida = (deleteComida) => {
+    const filteredComida = foodsListShow.filter((eachComida) => {
+      if(eachComida.name === deleteComida){
+        return false
+      }else{
+        return true
+      }
+    })
+    
     setFoodsListShow(filteredComida)
   }
 
@@ -52,6 +63,7 @@ function App() {
           <Product
            key={eachFood.name + index}
            eachItem = {eachFood}
+           borrarComida={borrarComida}
            />
         )
       })}
