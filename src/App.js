@@ -1,23 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+// src/index.js
+import 'antd/dist/antd.min.css';
+
+import foods from './foods.json';
+import { useState } from 'react';
+import Product from './components/Product';
+import AddFoodForm from './components/AddFoodForm';
 
 function App() {
+
+  const [foodsList, setFoodsList] = useState(foods)
+
+  const addComida = (comida) => {
+    console.log("añadiendo comida desde AddFoodForm", comida)
+    const copy = [... foodsList]
+    copy.push(comida)
+    setFoodsList(copy)
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      <AddFoodForm addComida={addComida} />
+
+      <h1>Food List</h1>
+      <div className='container-foods'>
+      {foodsList.map((eachFood, index) => {
+        return(
+          <Product
+           key={eachFood.name + index}
+           eachItem = {eachFood}
+           />
+        )
+      })}
+
+      </div>
+      
     </div>
   );
 }
