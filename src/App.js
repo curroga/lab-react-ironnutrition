@@ -7,11 +7,14 @@ import { useState } from 'react';
 import Product from './components/Product';
 import AddFoodForm from './components/AddFoodForm';
 import Search from './components/Search'
+import Mensaje from './components/Mensaje';
 
 function App() {
 
   const [foodsList, setFoodsList] = useState(foods)
   const [foodsListShow, setFoodsListShow] = useState(foods)
+  const [formIsShowing, setFormIsShowing] = useState(false)
+  
 
   const addComida = (comida) => {
     console.log("añadiendo comida desde AddFoodForm", comida)
@@ -43,7 +46,16 @@ function App() {
     
     setFoodsListShow(filteredComida)
   }
-
+  
+  const toggleForm = () => {
+    setFormIsShowing(true)
+    if(formIsShowing === true){
+      setFormIsShowing(false)
+    } else{
+      setFormIsShowing(true)
+    }
+  }
+  
   
 
 
@@ -51,7 +63,9 @@ function App() {
   return (
     <div className="App">
       
-      <AddFoodForm addComida={addComida} />
+      <button onClick={toggleForm}>Abrir el form</button>
+      {formIsShowing === true && <AddFoodForm addComida={addComida} /> }
+      
       <hr />
       <Search filterComida={filterComida} />
       <hr />
@@ -67,6 +81,8 @@ function App() {
            />
         )
       })}
+      {foodsListShow.length === 0 && <Mensaje /> }
+
 
       </div>
       
